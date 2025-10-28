@@ -2,6 +2,22 @@
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
+  app: {
+    head: {
+      title: "Jogo da Forca",
+      meta: [
+        {
+          name: "description",
+          content: "Jogue o clássico jogo da forca sozinho ou com amigos!",
+        },
+        {
+          name: "google-site-verification",
+          content: "VZjAZlTLnDzvQcynf3M5fvo5G5L_eS3x8h4LbR-IJys",
+        },
+      ],
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
+    },
+  },
   devtools: { enabled: true },
   modules: ["@nuxt/icon", "@nuxt/image", "@nuxt/ui", "@nuxt/fonts"],
   css: ["~/assets/css/main.css", "animate.css"],
