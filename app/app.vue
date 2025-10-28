@@ -88,7 +88,7 @@
               Jogar Novamente
             </UButton>
             <div class="mt-4 flex flex-col items-center justify-center text-stone-500"
-              v-if="diariobloqueio && abaAtiva == 'daily">
+              v-if="diariobloqueio && abaAtiva == 'daily'">
               <span class="text-center"> Você completou o desafio diário, volte amanhã para o próximo desafio ou jogue o
                 modo
                 infinito</span>
@@ -120,7 +120,8 @@
             px-2 flex items-center justify-center">
               Jogar Novamente
             </UButton>
-            <div class="mt-4 flex flex-col items-center justify-center text-stone-500" v-if="diariobloqueio">
+            <div class="mt-4 flex flex-col items-center justify-center text-stone-500"
+              v-if="diariobloqueio && abaAtiva == 'daily'">
               <span class="text-center"> Você completou o desafio diário, volte amanhã para o próximo desafio ou jogue o
                 modo
                 infinito</span>
