@@ -10,10 +10,6 @@ export default defineNuxtConfig({
           name: "description",
           content: "Jogue o clássico jogo da forca sozinho ou com amigos!",
         },
-        {
-          name: "google-site-verification",
-          content: "VZjAZlTLnDzvQcynf3M5fvo5G5L_eS3x8h4LbR-IJys",
-        },
       ],
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
     },

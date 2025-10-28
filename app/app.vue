@@ -11,10 +11,10 @@
             <span class="text-xs font-light text-stone-500">{{ minititulo }}</span>
           </template>
         </USeparator>
-        <UBadge :icon="iconePersonalizado" size="xl" class="rounded-full"
-          :color="minititulo == 'Perdeu...' ? 'tertiary' : corPrimaria" variant="subtle">
+        <UButton @click="() => { if (abaAtiva == 'infinity') tentarNovamente() }" :icon="iconePersonalizado" size="xl"
+          class="rounded-full py-1" :color="minititulo == 'Perdeu...' ? 'tertiary' : corPrimaria" variant="subtle">
           {{ badgePrincipal }}
-        </UBadge>
+        </UButton>
       </UContainer>
 
 
@@ -22,13 +22,30 @@
       <UContainer class="mb-10 sm:mb-5 flex flex-col gap-5 items-center justify-center">
         <!-- IMAGEM -->
         <img :src="`/desenhos/${forcaTentativa}.png`" class="h-50 sm:h-60 pl-7" />
+        <!-- PALAVRA -->
         <div class="flex flex-wrap justify-center gap-1">
           <div
             :class="{ 'basis-full md:basis-0': (letraPalavra == ' ' || letraPalavra == '-') && (!/\d/.test(palavra[i + 1])) }"
             class="group" v-for="(letraPalavra, i) in palavra" :key="i">
             <UBadge v-if="letravalida(letraPalavra)"
-              :color="!chutes.some(l => letraPalavra.includes(l)) ? 'tertiary' : corPrimaria" variant="subtle" class="text-xl font-bold text-white
-              w-6 h-6 md:w-12 md:h-12 flex items-center justify-center p-0 ">
+              :color="!chutes.some(l => letraPalavra.includes(l)) ? 'tertiary' : corPrimaria" variant="subtle" :class="[' font-bold text-white md:w-12 md:h-12 flex items-center justify-center p-0',
+                (palavra.includes(' ')
+                  ? palavra.split(' ').some(p => p.length > 10)
+                  : palavra.length > 10)
+                  ? (palavra.includes(' ')
+                    ? (palavra.split(' ').some(p => p.length > 12)
+                      ? 'w-5 h-5 text-sm'
+                      : palavra.split(' ').some(p => p.length > 11)
+                        ? 'w-5.5 h-5.5 text-base'
+                        : 'w-6 h-6 text-md')
+                    : palavra.length > 12
+                      ? 'w-5 h-5 text-sm'
+                      : palavra.length > 11
+                        ? 'w-5.5 h-5.5 text-base'
+                        : 'w-6 h-6 text-md')
+                  : 'w-7 h-7 text-xl'
+
+              ]">
               {{chutes.some(l => letraPalavra.includes(l)) ? letraPalavra : ''}}
             </UBadge>
             <div v-if="!letravalida(letraPalavra)" class="w-3 md:w-5 ">
@@ -52,13 +69,13 @@
       </UContainer>
 
       <!-- TECLADO -->
-      <UContainer class="max-w-[380px] sm:max-w-2xl md:max-w-3xl flex flex-wrap px-1 items-center justify-center">
+      <UContainer class="max-w-[380px] sm:max-w-2xl md:max-w-3xl  flex flex-wrap px-0.5 items-center justify-center">
         <div :class="{ 'basis-full pb-2': letra.letra == ' ' }" v-for="letra in letras" :key="letra.id">
 
           <UButton @click="chutar(letra)" v-if="letra.letra != ' '" :disabled="desabilitarTeclado(letra.status)"
             :color="corteclado(letra.status)" :class="[
               'text-xl md:text-2xl font-bold text-white flex items-center justify-center p-0',
-              /\d/.test(letra.letra) ? 'w-7 h-7 md:w-13 md:h-11 m-0.5 md:m-1' : 'w-8 h-8 md:w-15 md:h-12 m-0.5 xs:m-1',
+              /\d/.test(letra.letra) ? 'w-7 h-8 md:w-13 md:h-11 m-0.5 md:m-1' : 'w-8 h-9 md:w-15 md:h-12 m-0.5 xs:m-1',
             ]">
             {{ letra.letra }}
           </UButton>
@@ -146,7 +163,7 @@
             <span class="text-center mb-4">por favor, defina uma palavra ou frase para começar o jogo!</span>
             <UForm :validate="validate" class="flex flex-col items-center justify-center space-y-1" @submit="onSubmit">
               <UFormField label="Palavra" name="palavra">
-                <UInput :color="corPrimaria" v-model="palavra" type="text" class="font-yarndings w-60 sm:w-xs "
+                <UInput :color="corPrimaria" v-model="palavra" type="text" class="font-fcirc w-60 sm:w-xs "
                   :size="tamanhoinput" />
               </UFormField>
               <UFormField label="Tema" name="tema">
@@ -565,8 +582,10 @@ onMounted(async () => {
     .then(data => {
       PalavrasForca.value = data;
     });
-  carregarPalavraDiaria();
-  if (abaAtiva.value == 'daily') carregarTentativaDiaria();
+  if (abaAtiva.value == 'daily') {
+    carregarTentativaDiaria();
+    carregarPalavraDiaria();
+  }
   // detecta o teclado físico
   document.addEventListener('keypress', handler);
 })
