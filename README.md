@@ -1,75 +1,50 @@
-# Nuxt Minimal Starter
+# Jogo da Forca
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Bem-vindo ao repositório do Jogo da Forca! Este é um projeto inspirado no clássico jogo de adivinhação de palavras, desenvolvido com Nuxt.js e hospedado em [forca.fun](https://forca.fun).
 
-## Setup
+- **Frontend**: Nuxt.js
+- **Hospedagem**: Vercel
 
-Make sure to install dependencies:
+## Como rodar localmente:
 
-```bash
-# npm
-npm install
+1. **Clone o repositório:**
 
-# pnpm
-pnpm install
+   ```bash
+   git clone https://github.com/JoaoPedro77/jogo-da-forca.git
+   cd jogo-da-forca
+   ```
 
-# yarn
-yarn install
+2. **Instale as dependências:**
 
-# bun
-bun install
-```
+   ### (Se não tiver, instale o pnpm)
 
-## Development Server
+   e use o comando
 
-Start the development server on `http://localhost:3000`:
+   ```bash
+   pnpm install
+   ```
 
-```bash
-# npm
-npm run dev
+3. **Inicie o servidor de desenvolvimento:**
 
-# pnpm
-pnpm dev
+   ```bash
+   pnpm dev
+   ```
 
-# yarn
-yarn dev
+   O jogo estará disponível em [http://localhost:3000](http://localhost:3000).
 
-# bun
-bun run dev
-```
+## Jogue agora!
 
-## Production
+Você pode jogar diretamente no navegador acessando [https://forca.fun](https://forca.fun).
 
-Build the application for production:
+## Contribuições
 
-```bash
-# npm
-npm run build
+voce pode fazer um **Fork** deste repositório e
+Abrir um **Pull Request** explicando suas alterações.
 
-# pnpm
-pnpm build
+## Licença
 
-# yarn
-yarn build
+Este projeto está licenciado sob a MIT License - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
-# bun
-bun run build
-```
+---
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+🛵 feito com muito amor 💖
