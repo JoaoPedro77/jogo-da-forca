@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --color-miku-50: #e9fbf8;
+  --color-miku-100: #c9f3eb;
+  --color-miku-200: #9de4d6;
+  --color-miku-300: #6bcfbe;
+  --color-miku-400: #3db8a4;
+  --color-miku-500: #1f9e8a;
+  --color-miku-600: #178375;
+  --color-miku-700: #136b62;
+  --color-miku-800: #10554f;
+  --color-miku-900: #0d4541;
+  --color-miku-950: #062a28;
+
+  --breakpoint-xs: 368px;
+
+  --font-yarndings: "Flow Circular", "sans-serif";
+}

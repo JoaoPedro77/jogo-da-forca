@@ -1,0 +1,56 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
+
+export default defineNuxtConfig({
+  compatibilityDate: "2025-07-15",
+  devtools: { enabled: true },
+  modules: ["@nuxt/icon", "@nuxt/image", "@nuxt/ui", "@nuxt/fonts"],
+  css: ["~/assets/css/main.css", "animate.css"],
+  ssr: false,
+  ui: {
+    theme: {
+      colors: [
+        "primary",
+        "secondary",
+        "tertiary",
+        "info",
+        "success",
+        "warning",
+        "error",
+        "red",
+        "orange",
+        "amber",
+        "lime",
+        "emerald",
+        "miku",
+        "cyan",
+        "blue",
+        "indigo",
+        "violet",
+        "purple",
+        "pink",
+      ],
+    },
+  },
+  appConfig: {
+    ui: {
+      colors: {
+        primary: "rose",
+        secondary: "fuchsia",
+        neutral: "stone",
+        tertiary: "stone",
+        red: "red",
+        orange: "orange",
+        amber: "amber",
+        lime: "lime",
+        emerald: "emerald",
+        miku: "miku",
+        cyan: "cyan",
+        blue: "blue",
+        indigo: "indigo",
+        violet: "violet",
+        purple: "purple",
+        pink: "pink",
+      },
+    },
+  },
+});
