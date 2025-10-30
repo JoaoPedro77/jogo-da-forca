@@ -7,6 +7,7 @@
       </div>
     </template>
     <template #right>
+      <UColorModeButton />
       <UModal>
         <UTooltip text="Info">
           <UButton color="neutral" size="xl" variant="ghost" aria-label="info">

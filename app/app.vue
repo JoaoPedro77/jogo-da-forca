@@ -1,7 +1,7 @@
 <template>
   <UApp>
     <MeuHeader :cor-primaria="corPrimaria" />
-    <UMain class="bg-stone-800 select-none">
+    <UMain class="bg-[#f5f5f4] dark:bg-stone-800 select-none">
       <!-- ABAS -->
       <UTabs v-model="abaAtiva" :color="corPrimaria" :content="false" :items="items" />
       <!-- TEMA E RESULTADO FIMDE JOGO -->
@@ -28,7 +28,7 @@
             :class="{ 'basis-full md:basis-0': (letraPalavra == ' ' || letraPalavra == '-') && (!/\d/.test(palavra[i + 1])) }"
             class="group" v-for="(letraPalavra, i) in palavra" :key="i">
             <UBadge v-if="letravalida(letraPalavra)"
-              :color="!chutes.some(l => letraPalavra.includes(l)) ? 'tertiary' : corPrimaria" variant="subtle" :class="[' font-bold text-white md:w-12 md:h-12 flex items-center justify-center p-0',
+              :color="!chutes.some(l => letraPalavra.includes(l)) ? 'tertiary' : corPrimaria" variant="subtle" :class="[' font-bold dark:text-white md:w-12 md:h-12 flex items-center justify-center p-0',
                 (palavra.includes(' ')
                   ? palavra.split(' ').some(p => p.length > 10)
                   : palavra.length > 10)
@@ -48,8 +48,8 @@
               ]">
               {{chutes.some(l => letraPalavra.includes(l)) ? letraPalavra : ''}}
             </UBadge>
-            <div v-if="!letravalida(letraPalavra)" class="w-3 md:w-5 ">
-              <span v-if="letraPalavra == `'`" class="w-1 h-2 md:w-1 md:h-3 mb-1 md:mx-1 rounded-2xl bg-stone-400" />
+            <div v-if="!letravalida(letraPalavra)" class="w-3 md:w-5 flex justify-center">
+              <div v-if="letraPalavra == `'`" class=" w-1 h-2 md:w-1 md:h-3 mb-1 md:mx-1 rounded-2xl bg-stone-400" />
             </div>
           </div>
         </div>
@@ -578,7 +578,6 @@ function carregarTentativaDiaria() {
     diariobloqueio.value = false;
     perdeubloqueio.value = false;
     ganhoubloqueio.value = false;
-
 
     carregarPalavraDiaria();
     return;
