@@ -608,6 +608,7 @@ onMounted(async () => {
     });
   if (abaAtiva.value == 'daily') {
     carregarTentativaDiaria();
+    carregarPalavraDiaria();
   }
   // detecta o teclado físico
   document.addEventListener('keypress', handler);
