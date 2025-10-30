@@ -328,9 +328,14 @@ function carregarPalavraDiaria() {
   const palavraSorteada = PalavrasForca.value[indicePalavra];
   palavra.value = palavraSorteada.palavra;
   tema.value = palavraSorteada.tema;
+
   formatarPalavra();
   carregarLetrasCorretas();
 
+}
+
+function obterDiaAtual() {
+  return new Date().toDateString();
 }
 
 //tira os numeros
@@ -410,6 +415,7 @@ function resetarStatusTeclado() {
 //reinicia valores pra tentar novamente.
 function tentarNovamente() {
   letraQueJaForam = [];
+
   acertos.value = 0;
   forcaTentativa.value = 0;
   chutes.value = [];
@@ -532,8 +538,8 @@ function handler(event) {
 // SALVAR E CARREGAR ---------------------------------------------------------------------------------------
 
 function salvarTentativaDiaria() {
-
   try {
+    localStorage.setItem('ultimoDia', obterDiaAtual());
     localStorage.setItem('tentativaDiaria', JSON.stringify({
       palavra: palavra.value,
       tema: tema.value,
@@ -558,8 +564,28 @@ function salvarTentativaDiaria() {
 }
 
 function carregarTentativaDiaria() {
+  const ultimoDia = localStorage.getItem('ultimoDia');
+  const diaAtual = obterDiaAtual();
+
+  // Se for outro dia alimpa as coisa e carrega a palavra
+  if (ultimoDia !== diaAtual) {
+    localStorage.removeItem('tentativaDiaria');
+    localStorage.setItem('ultimoDia', diaAtual);
+
+    letraQueJaForam = [];
+    resetarLetras();
+    resetarStatusTeclado();
+    diariobloqueio.value = false;
+    perdeubloqueio.value = false;
+    ganhoubloqueio.value = false;
+
+
+    carregarPalavraDiaria();
+    return;
+  }
+
   const tentativaSalva = JSON.parse(localStorage.getItem('tentativaDiaria'));
-  if ((tentativaSalva) && abaAtiva.value == 'daily') {
+  if (tentativaSalva && abaAtiva.value == 'daily') {
     chutes.value = tentativaSalva.chutes;
     forcaTentativa.value = tentativaSalva.forcaTentativa;
     acertos.value = tentativaSalva.acertos;
@@ -573,7 +599,6 @@ function carregarTentativaDiaria() {
   carregarLetrasCorretas();
 }
 
-
 // LIFECYCLE HOOKS ---------------------------------------------------------------------------------------
 
 onMounted(async () => {
@@ -584,7 +609,6 @@ onMounted(async () => {
     });
   if (abaAtiva.value == 'daily') {
     carregarTentativaDiaria();
-    carregarPalavraDiaria();
   }
   // detecta o teclado físico
   document.addEventListener('keypress', handler);
