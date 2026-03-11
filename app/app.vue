@@ -410,6 +410,7 @@ function chutar(letra) {
 }
 
 function carregarPalavraAleatoria() {
+  if (PalavrasForca.value.length === 0) return; // Proteção SSR
   const palavraSorteada = PalavrasForca.value[Math.floor(Math.random() * PalavrasForca.value.length)];
   palavra.value = palavraSorteada.palavra;
   tema.value = palavraSorteada.tema;
@@ -621,7 +622,7 @@ function carregarTentativaDiaria() {
 
 const route = useRoute();
 
-// Sincroniza a variável com a query string sempre que a rota mudar
+// Sincroniza a variável com a query string sempre que a rota mudar tardiamente
 watch(() => route.query.aba, (newAba) => {
   if (newAba && newAba !== abaAtiva.value) {
     abaAtiva.value = newAba;
@@ -631,7 +632,7 @@ watch(() => route.query.aba, (newAba) => {
        window.history.replaceState({}, document.title, window.location.pathname);
     }
   }
-}, { immediate: true }); // Executa logo que monta também
+}); 
 
 onMounted(async () => {
   sortearCor();
@@ -640,6 +641,11 @@ onMounted(async () => {
     .then(data => {
       PalavrasForca.value = data;
     });
+
+  if (route.query.aba && import.meta.client) {
+    abaAtiva.value = route.query.aba;
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
 
   if (abaAtiva.value == 'daily') {
     carregarTentativaDiaria();
