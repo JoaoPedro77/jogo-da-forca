@@ -7,7 +7,14 @@
       </div>
     </template>
     <template #right>
-      <UColorModeButton />
+      <ClientOnly>
+        <UButton
+          :icon="isDark ? 'i-lucide:sun' : 'i-lucide:moon'"
+          color="neutral"
+          variant="ghost"
+          @click="toggleColorMode"
+        />
+      </ClientOnly>
       <UModal>
         <UTooltip text="Info">
           <UButton color="neutral" size="xl" variant="ghost" aria-label="info">
@@ -77,6 +84,13 @@
 </template>
 
 <script setup>
+
+const colorMode = useColorMode()
+const isDark = computed(() => colorMode.value === 'dark')
+
+function toggleColorMode() {
+  colorMode.preference = isDark.value ? 'light' : 'dark'
+}
 
 defineProps({
   corPrimaria: String

@@ -14,10 +14,25 @@ export default defineNuxtConfig({
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
     },
   },
+  site: {
+    url: "https://forca.fun/",
+    name: "Jogo da Forca",
+    description: "Jogue o clássico jogo da forca sozinho ou com amigos!",
+    defaultLocale: "pt-BR",
+  },
   devtools: { enabled: true },
-  modules: ["@nuxt/icon", "@nuxt/image", "@nuxt/ui", "@nuxt/fonts"],
+  modules: [
+    "@nuxt/icon",
+    "@nuxt/image",
+    "@nuxt/ui",
+    "@nuxt/fonts",
+    "@nuxtjs/seo",
+  ],
   css: ["~/assets/css/main.css", "animate.css"],
-  ssr: false,
+  ssr: true,
+  colorMode: {
+    preference: 'dark'
+  },
   ui: {
     theme: {
       colors: [

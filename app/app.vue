@@ -193,11 +193,21 @@
 import { ref } from 'vue';
 import { useMediaQuery } from '@vueuse/core'
 import { mapeamentoTemas } from '~/utils/mapeamentoTemas.js';
+
+useSeoMeta({
+  title: 'Jogo da Forca - Jogue Grátis Online',
+  ogTitle: 'Jogo da Forca - Jogue Grátis Online',
+  description: 'Jogue o clássico jogo da forca com amigos ou sozinho. Temas variados, desafio diário e modo infinito.',
+  ogDescription: 'Jogue o clássico jogo da forca com amigos ou sozinho. Temas variados, desafio diário e modo infinito.',
+  ogImage: 'https://forca.fun/favicon.png',
+  twitterCard: 'summary_large_image',
+})
 import { apenasLestras, lestrasEnumeros } from '~/utils/letrasTeclado.js';
 import { items } from '~/utils/abasForca.js';
 
 
 // VARIÁVEIS 
+const corPrimaria = ref("primary");
 const abaAtiva = ref('daily');
 
 const PalavrasForca = ref([]); // palavras do jogo
@@ -286,10 +296,11 @@ const corteclado = ((status) => {
   }
 });
 
-const corPrimaria = computed(() => {
-  const cores = ["primary", "red", "orange", "emerald", "miku", "blue", "indigo", "violet", "purple", "pink", "secondary"];
-  return cores[Math.floor(Math.random() * cores.length)];
-});
+const todasAsCores = ["primary", "red", "orange", "emerald", "miku", "blue", "indigo", "violet", "purple", "pink", "secondary"];
+
+function sortearCor() {
+  corPrimaria.value = todasAsCores[Math.floor(Math.random() * todasAsCores.length)];
+}
 
 
 // ABAS ---------------------------------------------------------------------------------------
@@ -601,6 +612,7 @@ function carregarTentativaDiaria() {
 // LIFECYCLE HOOKS ---------------------------------------------------------------------------------------
 
 onMounted(async () => {
+  sortearCor();
   await fetch('/palavras_forca.json')
     .then(res => res.json())
     .then(data => {

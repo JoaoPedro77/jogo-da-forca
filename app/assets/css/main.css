@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme static {
   --color-miku-50: #e9fbf8;
   --color-miku-100: #c9f3eb;
