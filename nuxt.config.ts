@@ -28,6 +28,11 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxtjs/seo",
   ],
+  nitro: {
+    prerender: {
+      routes: ['/', '/infinito', '/personalizado']
+    }
+  },
   css: ["~/assets/css/main.css", "animate.css"],
   ssr: true,
   colorMode: {

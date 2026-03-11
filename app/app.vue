@@ -4,6 +4,10 @@
     <UMain class="bg-[#f5f5f4] dark:bg-stone-800 select-none">
       <!-- ABAS -->
       <UTabs v-model="abaAtiva" :color="corPrimaria" :content="false" :items="items" />
+      
+      <!-- PÁGINAS INVISÍVEIS PARA O ROTEADOR -->
+      <div class="hidden"><NuxtPage /></div>
+
       <!-- TEMA E RESULTADO FIMDE JOGO -->
       <UContainer class="pt-6 gap-2 flex flex-col items-center justify-center">
         <USeparator class=" w-40">
@@ -106,13 +110,15 @@
             </UButton>
             <div class="mt-4 flex flex-col items-center justify-center text-stone-500"
               v-if="diariobloqueio && abaAtiva == 'daily'">
-              <span class="text-center"> Você completou o desafio diário, volte amanhã para o próximo desafio ou jogue o
-                modo
-                infinito</span>
-              <UButton icon="gravity-ui:thumbs-up-fill" @click="ganhou = false" :color="corPrimaria" class="mt-3 text-md font-bold text-white
-              px-2 flex items-center justify-center">
-                Entendido!
-              </UButton>
+              <span class="text-center"> Você completou o desafio diário, Continue jogando:</span>
+              <div class="flex gap-2 w-full mt-3">
+                <UButton icon="material-symbols:joystick-outline-sharp" @click="() => { ganhou = false; abaAtiva = 'infinity' }" :color="corPrimaria" class="flex-1 text-md font-bold text-white px-2 flex items-center justify-center">
+                  Infinito
+                </UButton>
+                <UButton icon="solar:pen-new-square-linear" @click="() => { ganhou = false; abaAtiva = 'party' }" :color="corPrimaria" class="flex-1 text-md font-bold text-white px-2 flex items-center justify-center">
+                  Personalizado
+                </UButton>
+              </div>
             </div>
           </div>
         </template>
@@ -139,13 +145,15 @@
             </UButton>
             <div class="mt-4 flex flex-col items-center justify-center text-stone-500"
               v-if="diariobloqueio && abaAtiva == 'daily'">
-              <span class="text-center"> Você completou o desafio diário, volte amanhã para o próximo desafio ou jogue o
-                modo
-                infinito</span>
-              <UButton icon="gravity-ui:thumbs-up-fill" @click="perdeu = false" :color="corPrimaria" class="mt-3 text-md font-bold text-white
-              px-2 flex items-center justify-center">
-                Entendido!
-              </UButton>
+              <span class="text-center"> Você completou o desafio diário, jogue o modo infinito ou personalizado:</span>
+              <div class="flex gap-2 w-full mt-3">
+                <UButton icon="material-symbols:joystick-outline-sharp" @click="() => { perdeu = false; abaAtiva = 'infinity' }" :color="corPrimaria" class="flex-1 text-md font-bold text-white px-2 flex items-center justify-center">
+                  Infinito
+                </UButton>
+                <UButton icon="solar:pen-new-square-linear" @click="() => { perdeu = false; abaAtiva = 'party' }" :color="corPrimaria" class="flex-1 text-md font-bold text-white px-2 flex items-center justify-center">
+                  Personalizado
+                </UButton>
+              </div>
             </div>
           </div>
         </template>
@@ -611,6 +619,20 @@ function carregarTentativaDiaria() {
 
 // LIFECYCLE HOOKS ---------------------------------------------------------------------------------------
 
+const route = useRoute();
+
+// Sincroniza a variável com a query string sempre que a rota mudar
+watch(() => route.query.aba, (newAba) => {
+  if (newAba && newAba !== abaAtiva.value) {
+    abaAtiva.value = newAba;
+    
+    // Limpa a URL para ficar bonita na barra logo em seguida
+    if (import.meta.client) {
+       window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }
+}, { immediate: true }); // Executa logo que monta também
+
 onMounted(async () => {
   sortearCor();
   await fetch('/palavras_forca.json')
@@ -618,10 +640,17 @@ onMounted(async () => {
     .then(data => {
       PalavrasForca.value = data;
     });
+
   if (abaAtiva.value == 'daily') {
     carregarTentativaDiaria();
     carregarPalavraDiaria();
+  } else if (abaAtiva.value == 'infinity') {
+    tentarNovamente();
+  } else if (abaAtiva.value == 'party') {
+    tentarNovamente();
+    tema.value = "Personalizado";
   }
+  
   // detecta o teclado físico
   document.addEventListener('keypress', handler);
 })
